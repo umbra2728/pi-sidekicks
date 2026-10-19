@@ -80,11 +80,20 @@ export default function sideAgents(pi: ExtensionAPI) {
     name: "subagent",
     label: "Subagent",
     description:
-      "Run a self-contained task in a background agent with fresh context. Returns an id; the result arrives later as a message. Use only for independent or context-heavy work.",
+      "Start a background agent with a fresh context and return its id immediately. It has the same tools and working directory as you; its final answer arrives later as a message that wakes you.",
+    promptSnippet: "Delegate an independent task to a background agent with fresh context; its result arrives as a message",
+    promptGuidelines: [
+      "Use subagent for self-contained work that would bloat your context or can run alongside yours: codebase recon, an independent review or second opinion, unrelated side tasks such as fetching or parsing a separate data source. Do small or tightly coupled work yourself.",
+      "Never let several agents, or an agent and you, edit the same files at the same time.",
+      "Write each task for a colleague with no context: goal, relevant paths, constraints, and what to report back. Ask for a concise report.",
+      "After spawning, continue your work or end your turn; never wait, sleep, or poll. Use subagent_message to redirect or follow up instead of spawning a new agent.",
+    ],
     parameters: Type.Object({
-      task: Type.String({ description: "Complete instructions; the agent sees nothing else." }),
-      model: Type.Optional(Type.String({ description: "provider/id. Default: current." })),
-      thinking: Type.Optional(StringEnum(["off", "minimal", "low", "medium", "high", "xhigh", "max"] as const)),
+      task: Type.String({ description: "Complete, self-contained instructions. The agent sees nothing else." }),
+      model: Type.Optional(Type.String({ description: "provider/id or a fuzzy id like 'haiku'. Default: your current model." })),
+      thinking: Type.Optional(
+        StringEnum(["off", "minimal", "low", "medium", "high", "xhigh", "max"] as const, { description: "Default: your current level." }),
+      ),
     }),
     async execute(_id, params, _signal, _onUpdate, ctx) {
       latestCtx = ctx;
@@ -93,15 +102,16 @@ export default function sideAgents(pi: ExtensionAPI) {
         model: resolveModel(params.model, ctx),
         thinkingLevel: params.thinking ?? ctx.thinkingLevel,
       });
-      return text(`Started ${record.id}. Don't wait or poll.`);
+      return text(`Started ${record.id}. Its result will arrive as a message.`);
     },
   });
 
   pi.registerTool({
     name: "subagent_message",
     label: "Subagent message",
-    description: "Steer a running subagent or continue a finished one.",
-    parameters: Type.Object({ id: Type.String(), message: Type.String() }),
+    description:
+      "Send a message to a subagent. A running agent receives it after its current step; a finished one resumes with its full context and reports again.",
+    parameters: Type.Object({ id: Type.String({ description: "Subagent id, e.g. a1." }), message: Type.String() }),
     async execute(_id, params, _signal, _onUpdate, ctx) {
       latestCtx = ctx;
       const outcome = await manager.message(params.id, params.message);
@@ -112,7 +122,7 @@ export default function sideAgents(pi: ExtensionAPI) {
   pi.registerTool({
     name: "subagent_stop",
     label: "Subagent stop",
-    description: "Stop a subagent.",
+    description: "Stop a running or queued subagent. No result message follows.",
     parameters: Type.Object({ id: Type.String() }),
     async execute(_id, params, _signal, _onUpdate, ctx) {
       latestCtx = ctx;
@@ -127,7 +137,7 @@ export default function sideAgents(pi: ExtensionAPI) {
   pi.registerTool({
     name: "subagent_list",
     label: "Subagent list",
-    description: "List subagents.",
+    description: "List subagents with status, activity, tokens, cost, and elapsed time. Results are delivered automatically; don't use this to poll.",
     parameters: Type.Object({}),
     async execute(_id, _params, _signal, _onUpdate, ctx) {
       latestCtx = ctx;
