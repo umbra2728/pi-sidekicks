@@ -11,13 +11,13 @@ Minimal background subagents for [pi](https://pi.dev).
 ## Install
 
 ```bash
-pi install /path/to/pi-side-agents
+pi install npm:@umbra2728/pi-side-agents
 ```
 
 Or try it without installing:
 
 ```bash
-pi -e /path/to/pi-side-agents/src/index.ts
+pi -e npm:@umbra2728/pi-side-agents
 ```
 
 ## Tools
@@ -54,4 +54,11 @@ node scripts/smoke.ts /tmp/some-dir      # end-to-end: parent spawns, result is 
 node scripts/lifecycle.ts /tmp/some-dir  # queueing, stop, continue
 ```
 
-The `@earendil-works/*` and `typebox` peers are provided by pi; for local typechecking, symlink them into `node_modules` from your pi installation.
+## Releasing
+
+Releases are published from GitHub Actions with npm trusted publishing (OIDC, no token) and provenance.
+
+```bash
+npm version patch      # bumps package.json, commits, tags vX.Y.Z
+git push --follow-tags # the Release workflow publishes to npm and creates a GitHub release
+```
