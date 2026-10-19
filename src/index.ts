@@ -7,7 +7,7 @@ import { AgentManager, type AgentRecord } from "./manager.ts";
 import { resolveModel } from "./models.ts";
 import { AgentWidget, elapsed, statsLine, summaryLine, TranscriptView, visibleInWidget } from "./ui.ts";
 
-const MAX_CONCURRENT = Number(process.env.PI_SIDE_AGENTS_CONCURRENCY) || 3;
+const MAX_CONCURRENT = Number(process.env.PI_SIDE_AGENTS_CONCURRENCY) || 10;
 const RESULT_TYPE = "subagent-result";
 const WIDGET_KEY = "side-agents";
 const COLLAPSED_PREVIEW_LINES = 3;

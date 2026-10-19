@@ -39,7 +39,7 @@ pi -e /path/to/pi-side-agents/src/index.ts
 
 ## Behavior
 
-- Up to 3 agents run at once; extra spawns queue. Override with `PI_SIDE_AGENTS_CONCURRENCY`.
+- Up to 10 agents run at once; extra spawns queue. Override with `PI_SIDE_AGENTS_CONCURRENCY`.
 - Subagents cannot spawn subagents.
 - Stopping via the tool is silent; stopping from `/subagents` posts a non-triggering result message with any partial output.
 - The last 8 finished sessions stay alive for continuation; older ones are released.
