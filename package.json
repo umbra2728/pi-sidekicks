@@ -1,6 +1,6 @@
 {
   "name": "pi-sidekicks",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Minimal background subagents for pi: fresh context, results delivered as messages, tiny tool schemas.",
   "type": "module",
   "license": "MIT",
