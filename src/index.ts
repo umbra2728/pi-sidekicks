@@ -7,9 +7,9 @@ import { AgentManager, type AgentRecord } from "./manager.ts";
 import { resolveModel } from "./models.ts";
 import { AgentWidget, elapsed, statsLine, summaryLine, TranscriptView, visibleInWidget } from "./ui.ts";
 
-const MAX_CONCURRENT = Number(process.env.PI_SIDE_AGENTS_CONCURRENCY) || 10;
+const MAX_CONCURRENT = Number(process.env.PI_SIDEKICKS_CONCURRENCY) || 10;
 const RESULT_TYPE = "subagent-result";
-const WIDGET_KEY = "side-agents";
+const WIDGET_KEY = "sidekicks";
 const COLLAPSED_PREVIEW_LINES = 3;
 
 interface ResultDetails {
@@ -21,7 +21,7 @@ interface ResultDetails {
 
 const text = (value: string) => ({ content: [{ type: "text" as const, text: value }], details: undefined });
 
-export default function sideAgents(pi: ExtensionAPI) {
+export default function sidekicks(pi: ExtensionAPI) {
   let latestCtx: ExtensionContext | undefined;
   let widgetTui: TUI | undefined;
   let ticker: ReturnType<typeof setInterval> | undefined;

@@ -1,5 +1,5 @@
 import { createAgentSession, DefaultResourceLoader, getAgentDir, SessionManager } from "@earendil-works/pi-coding-agent";
-import sideAgents from "../src/index.ts";
+import sidekicks from "../src/index.ts";
 
 const cwd = process.argv[2] ?? process.cwd();
 const modelQuery = process.argv[3] ?? "claude-haiku-5-5";
@@ -10,7 +10,7 @@ const resourceLoader = new DefaultResourceLoader({
   noExtensions: true,
   noSkills: true,
   noPromptTemplates: true,
-  extensionFactories: [{ name: "side-agents", factory: sideAgents }],
+  extensionFactories: [{ name: "sidekicks", factory: sidekicks }],
 });
 await resourceLoader.reload();
 

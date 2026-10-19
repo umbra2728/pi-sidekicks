@@ -1,5 +1,5 @@
 {
-  "name": "@umbra2728/pi-side-agents",
+  "name": "pi-sidekicks",
   "version": "0.1.0",
   "description": "Minimal background subagents for pi: fresh context, results delivered as messages, tiny tool schemas.",
   "type": "module",
@@ -7,11 +7,11 @@
   "author": "umbra2728",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/umbra2728/pi-side-agents.git"
+    "url": "git+https://github.com/umbra2728/pi-sidekicks.git"
   },
-  "homepage": "https://github.com/umbra2728/pi-side-agents#readme",
+  "homepage": "https://github.com/umbra2728/pi-sidekicks#readme",
   "bugs": {
-    "url": "https://github.com/umbra2728/pi-side-agents/issues"
+    "url": "https://github.com/umbra2728/pi-sidekicks/issues"
   },
   "keywords": [
     "pi-package",
@@ -32,6 +32,7 @@
     "typecheck": "tsc --noEmit"
   },
   "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
     "access": "public",
     "provenance": true
   },

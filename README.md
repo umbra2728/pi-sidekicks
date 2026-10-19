@@ -1,4 +1,4 @@
-# pi-side-agents
+# pi-sidekicks
 
 Minimal background subagents for [pi](https://pi.dev).
 
@@ -11,13 +11,13 @@ Minimal background subagents for [pi](https://pi.dev).
 ## Install
 
 ```bash
-pi install npm:@umbra2728/pi-side-agents
+pi install npm:pi-sidekicks
 ```
 
 Or try it without installing:
 
 ```bash
-pi -e npm:@umbra2728/pi-side-agents
+pi -e npm:pi-sidekicks
 ```
 
 ## Tools
@@ -39,7 +39,7 @@ pi -e npm:@umbra2728/pi-side-agents
 
 ## Behavior
 
-- Up to 10 agents run at once; extra spawns queue. Override with `PI_SIDE_AGENTS_CONCURRENCY`.
+- Up to 10 agents run at once; extra spawns queue. Override with `PI_SIDEKICKS_CONCURRENCY`.
 - Subagents cannot spawn subagents.
 - Stopping via the tool is silent; stopping from `/subagents` posts a non-triggering result message with any partial output.
 - The last 8 finished sessions stay alive for continuation; older ones are released.
