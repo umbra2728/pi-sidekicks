@@ -84,7 +84,6 @@ export default function sideAgents(pi: ExtensionAPI) {
     promptSnippet: "Delegate an independent task to a background agent with fresh context; its result arrives as a message",
     promptGuidelines: [
       "Use subagent for self-contained work that would bloat your context or can run alongside yours: codebase recon, an independent review or second opinion, unrelated side tasks such as fetching or parsing a separate data source. Do small or tightly coupled work yourself.",
-      "Never let several agents, or an agent and you, edit the same files at the same time.",
       "Write each task for a colleague with no context: goal, relevant paths, constraints, and what to report back. Ask for a concise report.",
       "After spawning, continue your work or end your turn; never wait, sleep, or poll. Use subagent_message to redirect or follow up instead of spawning a new agent.",
     ],
